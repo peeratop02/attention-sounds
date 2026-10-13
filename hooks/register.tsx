@@ -155,7 +155,7 @@ export const register: Register = (on, options) => {
       // Listed afresh on each open, so a file dropped into sounds/ shows up without a reload.
       files = undefined
       // The panel where a surface draws it, the same picks as text where none does.
-      const { isPlaced } = await $.ui.open({ id: PANE, title: 'Notification sounds' })
+      const { isPlaced } = await $.ui.open({ id: PANE, title: 'Notification sounds', focus: true, closeOnEscape: true })
       return { text: isPlaced ? 'Sound panel opened.' : await show($, options) }
     }
     if (!FIELDS.includes(field) || value === undefined) return { text: await show($, options) }
@@ -179,6 +179,11 @@ export const register: Register = (on, options) => {
     const home = [...groups].find(([, list]) => list.includes(heard))?.[0]
     const group = shown !== undefined && groups.has(shown) ? shown : home ?? [...groups.keys()][0] ?? ''
     const chips = (groups.get(group) ?? []).slice(0, ROOM)
+    // Terminal only: hotkeys, and the focus ring starting on the current sound.
+    const key = (hotkey: string | undefined) => (e.surface === 'terminal' && hotkey !== undefined ? { hotkey } : {})
+    const tabs = [...groups.keys()].slice(0, ROOM)
+    const at = tabs.indexOf(group)
+    const start = chips.includes(current) ? current : chips[0]
     const assign = async (name: string) => {
       await $.store.set(editing, name)
       play(name === 'default' ? picks.sound ?? '' : name)
@@ -211,11 +216,12 @@ export const register: Register = (on, options) => {
                 </Text>
                 <Text dimColor>{HINTS[field]}</Text>
               </Box>
-              <Button key={`play-${field}`} plain dimColor onPress={async () => play((await resolve($, options, field)) ?? '')}>
+              <Button key={`play-${field}`} plain dimColor {...key(field === editing ? 't' : undefined)} onPress={async () => play((await resolve($, options, field)) ?? '')}>
                 ▶
               </Button>
               <Button
                 key={`edit-${field}`}
+                {...key(String(FIELDS.indexOf(field) + 1))}
                 variant={field === editing ? 'primary' : 'secondary'}
                 onPress={() => {
                   editing = field
@@ -238,15 +244,16 @@ export const register: Register = (on, options) => {
             </Box>
             {editing !== 'sound' &&
               ['default', 'off'].map(name => (
-                <Button key={`chip-${name}`} variant={name === current ? 'primary' : 'secondary'} onPress={() => assign(name)}>
+                <Button key={`chip-${name}`} variant={name === current ? 'primary' : 'secondary'} {...key(name === 'default' ? 'd' : 'm')} onPress={() => assign(name)}>
                   {name === 'default' ? `Use default (${picks.sound})` : 'Mute'}
                 </Button>
               ))}
           </Box>
           <Box flexDirection="row" flexWrap="wrap" gap={1}>
-            {[...groups.keys()].slice(0, ROOM).map(name => (
+            {tabs.map((name, i) => (
               <Button
                 key={`lib-${name}`}
+                {...key(tabs.length < 2 ? undefined : i === (at + 1) % tabs.length ? 'n' : i === (at + tabs.length - 1) % tabs.length ? 'b' : undefined)}
                 plain
                 dimColor={name !== group}
                 onPress={() => {
@@ -260,12 +267,17 @@ export const register: Register = (on, options) => {
           </Box>
           <Box flexDirection="row" flexWrap="wrap" gap={1}>
             {chips.map(name => (
-              <Button key={`chip-${name}`} variant={name === current ? 'primary' : 'secondary'} onPress={() => assign(name)}>
+              <Button key={`chip-${name}`} variant={name === current ? 'primary' : 'secondary'} {...(name === start ? { autoFocus: true as const } : {})} onPress={() => assign(name)}>
                 {name}
               </Button>
             ))}
           </Box>
-          <Text dimColor>Click a sound to hear it and use it. Add your own: drop a file into sounds/Mine.</Text>
+          <Text dimColor>
+            {e.surface === 'terminal'
+              ? 'arrows move · enter hears and uses · 1-5 event · n/b library · t test · d default · m mute · esc closes'
+              : 'Click a sound to hear it and use it.'}{' '}
+            Add your own: see /sound info.
+          </Text>
         </Box>
       </Box>
     )

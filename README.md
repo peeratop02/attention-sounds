@@ -35,6 +35,26 @@ Answer `y` to add the marketplace, then pick a scope. Installed at the user scop
 
 In the desktop app, `/sound` opens a panel: pick an event, pick a library, click a sound to hear it and use it.
 
+In the terminal the panel takes the keyboard:
+
+| Key | Does |
+| --- | --- |
+| arrows / Tab | move between sounds and buttons |
+| Enter | hear the sound and use it |
+| `1`-`5` | choose the event to edit (default, done, permission, question, attention) |
+| `n` / `b` | next / previous library |
+| `t` | test what the event plays now |
+| `d` / `m` | follow the default / mute |
+| Esc | close |
+
+## Update
+
+```
+claude plugin update attention-sounds@peeratop02
+```
+
+Then `/reload-plugins` in a running session, or start a new one.
+
 ## Sounds
 
 Ships with 18 interface sounds from [Kenney](https://kenney.nl/assets/interface-sounds) (CC0), trimmed and re-encoded.

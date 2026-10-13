@@ -77,6 +77,7 @@ for (const surface of ['terminal', 'desktop'] as const) {
     const ui = await $.ui.mount({ plugin: 'attention-sounds', surface, component: 'Pane', requestId: 'sounds', props: {} } as never)
     const press = (key: string) => $.ui.press({ plugin: 'attention-sounds', key })
     expect(await ui.find({ key: 'chip-Confirm 1' })).toBeDefined()
+    expect(((await ui.find({ key: 'edit-sound' })) as { props?: { hotkey?: string } } | undefined)?.props?.hotkey).toBe(surface === 'terminal' ? '1' : undefined)
     await press('edit-permission')
     await press('lib-iOS Modern')
     await press('chip-Bamboo')

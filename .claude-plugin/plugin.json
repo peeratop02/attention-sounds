@@ -1,6 +1,6 @@
 {
   "name": "attention-sounds",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Plays a sound when Claude finishes, needs permission, asks a question, or otherwise needs attention.",
   "userConfig": {
     "sound": {
