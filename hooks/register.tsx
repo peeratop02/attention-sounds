@@ -143,7 +143,7 @@ export const register: Register = (on, options) => {
     const [field, ...rest] = e.args.trim().split(/\s+/)
     const value = rest.length > 0 ? rest.join(' ') : undefined
     const sounds = await library($)
-    if (field === 'info') return { text: `${INFO}\n\n${await names($)}` }
+    if (field === 'info') return { text: `${INFO}\n\nSounds folder: ${$.plugin.root}/sounds\n\n${await names($)}` }
     if (field === 'test') {
       const name = await resolve($, options, value ?? 'sound')
       if (name === undefined) return { text: `Unknown "${value}". Give a sound name or an event: ${FIELDS.join(', ')}` }

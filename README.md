@@ -39,7 +39,22 @@ In the desktop app, `/sound` opens a panel: pick an event, pick a library, click
 
 Ships with 18 interface sounds from [Kenney](https://kenney.nl/assets/interface-sounds) (CC0), trimmed and re-encoded.
 
-To add your own, make a folder inside the mod's `sounds/` (for example `sounds/Mine/`) and drop `.m4a`, `.mp3`, `.wav`, `.aiff` or `.caf` files in it. Each folder is a library in the panel; the file name without its extension is the sound's name. Run `/sound` again to pick them up. On macOS, `/System/Library/Sounds` is a good place to copy from.
+### Add your own
+
+1. Run `/sound info`. It prints the mod's sounds folder (`Sounds folder: ...`).
+2. Make a folder inside it, for example `Mine/`. Each folder shows up as a library in the panel.
+3. Drop audio files in: `.m4a`, `.mp3`, `.wav`, `.aiff` or `.caf`. The file name without its extension is the sound's name (`Vine Boom.mp3` becomes `Vine Boom`).
+4. Run `/sound` again. No restart needed.
+
+Good sources: `/System/Library/Sounds` on macOS, [Kenney](https://kenney.nl/assets/category:Audio) and [freesound](https://freesound.org) for free packs, any soundboard site for memes.
+
+Short clips that start at once work best. To cut silence from both ends and even out the volume with ffmpeg:
+
+```
+ffmpeg -i in.mp3 -af "silenceremove=start_periods=1:start_threshold=-45dB,areverse,silenceremove=start_periods=1:start_threshold=-50dB,areverse,loudnorm" "Mine/My Sound.m4a"
+```
+
+A plugin update replaces the installed folder, so keep a copy of your own sounds somewhere else.
 
 ## Notes
 
