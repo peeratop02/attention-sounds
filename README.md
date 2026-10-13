@@ -1,5 +1,9 @@
 # attention-sounds
 
+[![attention-sounds showcase: click to watch with sound](media/showcase.gif)](media/showcase.mp4)
+
+▶ **[Watch the 36-second showcase with sound](media/showcase.mp4)** (the preview above is silent)
+
 A Claude Code mod that plays a sound when Claude needs you, so you can do other things while it works.
 
 | Event | Rings when |
