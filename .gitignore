@@ -1,0 +1,5 @@
+.claude-plugin/types/
+.DS_Store
+# Only the CC0 pack is published; other folders are local sound packs.
+sounds/*
+!sounds/Kenney/

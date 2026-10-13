@@ -1,0 +1,42 @@
+{
+  "name": "attention-sounds",
+  "version": "0.1.0",
+  "description": "Plays a sound when Claude finishes, needs permission, asks a question, or otherwise needs attention.",
+  "userConfig": {
+    "sound": {
+      "type": "string",
+      "title": "Default sound",
+      "description": "Sound used by every event set to 'default'.",
+      "default": "Confirm 1"
+    },
+    "done": {
+      "type": "string",
+      "title": "Done",
+      "description": "Claude finished its turn.",
+      "default": "default"
+    },
+    "permission": {
+      "type": "string",
+      "title": "Permission",
+      "description": "Claude is waiting for a permission answer.",
+      "default": "default"
+    },
+    "question": {
+      "type": "string",
+      "title": "Question",
+      "description": "Claude is asking a question.",
+      "default": "default"
+    },
+    "attention": {
+      "type": "string",
+      "title": "Other attention",
+      "description": "Any other notification that wants you back.",
+      "default": "default"
+    }
+  },
+  "author": {
+    "name": "peeratop02"
+  },
+  "repository": "https://github.com/peeratop02/attention-sounds",
+  "license": "MIT"
+}

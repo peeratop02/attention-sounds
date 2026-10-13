@@ -1,0 +1,15 @@
+{
+  "name": "peeratop02",
+  "owner": {
+    "name": "peeratop02"
+  },
+  "plugins": [
+    {
+      "name": "attention-sounds",
+      "source": "./"
+    }
+  ],
+  "metadata": {
+    "description": "Claude Code mods by peeratop02."
+  }
+}
